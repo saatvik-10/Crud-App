@@ -1,0 +1,180 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="D:/WEB DEV/images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="D:/WEB DEV/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="D:/WEB DEV/images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="D:/WEB DEV/images/favicon_io/site.webmanifest">
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container mt-4 col-5">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Chapter Name"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
+          />
+          <button
+            id="click"
+            class="btn btn-outline-success"
+            type="button"
+            id="button-addon2"
+          >
+            Add
+          </button>
+        </div>
+        <ul id="parentList" class="list-group">
+          <li class="list-group-item d-flex justify-content-between">
+            <h3 class="flex-grow-1">Chapter 1</h3>
+            <button class="btn btn-warning mx-2" onclick="editChapter(this)">
+              Edit
+            </button>
+            <button class="btn btn-danger" onclick="removeChapter(this)">
+              Remove
+            </button>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <script>
+      let btn = document.getElementById("click");
+      let parentList = document.getElementById("parentList");
+
+      function addChapter(_event) {
+        if (parentList.children[0].className == "emptyMsg") {
+          parentList.children[0].remove();
+        }
+        let currentBtn = _event.currentTarget;
+        let currentInput = currentBtn.previousElementSibling;
+        let currentChapterName = currentInput.value;
+
+        let newLi = document.createElement("li");
+        newLi.className = "list-group-item d-flex justify-content-between";
+        newLi.innerHTML = `<h3 class="flex-grow-1">${currentChapterName}</h3>
+                <button class="btn btn-warning mx-2" onclick='editChapter(this)'>Edit</button>
+                <button class="btn btn-danger" onclick='removeChapter(this)'>Remove</button>`;
+                console.log(parentList.children)
+        
+        parentList.appendChild(newLi)
+        
+        parentList.append(newLi);
+      }
+
+      click.addEventListener("click", addChapter);
+      function removeChapter(currentChapter) {
+        currentChapter.parentElement.remove();
+        let parentList = document.getElementById("parentList");
+
+        if (parentList.children.length == 0) {
+          let newMsg = document.createElement("h4");
+          newMsg.classList.add("emptyMsg");
+          newMsg.textContent = "No Chapters Found!";
+          parentList.appendChild(newMsg);
+        }
+      }
+
+      function editChapter(currentChapter) {
+        // console.log('editing')
+        if (currentChapter.textContent == "Done") {
+          currentChapter.textContent = "Edit";
+          let currChapterName = currentChapter.previousElementSibling.value;
+          let currHeading = document.createElement("h3");
+          currHeading.className = "flex-grow-1";
+          currHeading.textContent = currChapterName;
+          currentChapter.parentElement.replaceChild(
+            currHeading,
+            currentChapter.previousElementSibling
+          );
+        } else {
+          currentChapter.textContent = "Done";
+          let currChapterName =
+            currentChapter.previousElementSibling.textContent;
+          let currInput = document.createElement("input");
+          currInput.type = "text";
+          currInput.placeholder = "Chapter Name";
+          currInput.class = "form-control";
+          currInput.value = currChapterName;
+
+          currentChapter.parentElement.replaceChild(
+            currInput,
+            currentChapter.previousElementSibling
+          );
+        }
+      }
+    </script>
+  </body>
+</html>
