@@ -16,8 +16,7 @@
     <link rel="manifest" href="./site.webmanifest">
   </head>
   <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Navbar</a>
           <button
@@ -79,7 +78,7 @@
     </header>
 
     <main>
-      <div class="container mt-4 col-5">
+      <div class="mt-4 col-lg-5 col-10 mx-auto">
         <div class="input-group mb-3">
           <input
             type="text"
@@ -149,7 +148,7 @@
       }
 
       function editChapter(currentChapter) {
-        
+        // console.log('editing')
         if (currentChapter.textContent == "Done") {
           currentChapter.textContent = "Edit";
           let currChapterName = currentChapter.previousElementSibling.value;
